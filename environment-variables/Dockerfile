@@ -10,4 +10,6 @@ COPY . .
 
 ENV PORT=5000
 
+ENV APP_NAME="my awesome application"
+
 CMD ["node", "src/index.js"]
