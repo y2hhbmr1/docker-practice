@@ -8,8 +8,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload. I have been edited
-          again
+          Edit <code>src/App.tsx</code> and save to reload. Hello from a brand
+          new Nginx
         </p>
         <a
           className="App-link"
