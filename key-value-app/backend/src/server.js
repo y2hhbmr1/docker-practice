@@ -1,31 +1,35 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const { keyValueRouter } = require('./routes/store');
+const { healthRouter } = require('./routes/health');
 
+const port = process.env.PORT;
 const app = express();
 
-// Middleware
 app.use(bodyParser.json());
+app.use('/health', healthRouter);
+app.use('/store', keyValueRouter);
 
-// Health check route
-app.get("/health", (req, res) => {
-  res.status(200).send("up");
-});
-
-// Connect to MongoDB
-console.log("Connecting to DB");
-
-mongoose.connect("mongodb://MongoDB/key-value-db", {
-  auth: {
-    username: "key-value-user",
-    password: "key-value-password",
-  },
-  connectTimeoutMS: 500,
-})
-.then(() => {
-  console.log("Connected to DB");
-  app.listen(3000, () => console.log("Listening on port 3000"));
-})
-.catch(err => {
-  console.error("Something went wrong", err);
-});
+console.log('Connecting to DB');
+mongoose
+  .connect(
+    `mongodb://${process.env.MONGODB_HOST}/${process.env.KEY_VALUE_DB}`,
+    {
+      auth: {
+        username: process.env.KEY_VALUE_USER,
+        password: process.env.KEY_VALUE_PASSWORD,
+      },
+      connectTimeoutMS: 500,
+    }
+  )
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Listening on port ${port}`);
+    });
+    console.log('Connected to DB');
+  })
+  .catch((err) => {
+    console.error('Something went wrong!');
+    console.error(err);
+  });

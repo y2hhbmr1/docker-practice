@@ -9,7 +9,7 @@ db.createUser({
   pwd: keyValuePassword,
   roles: [
     {
-      role: "readWrite",
+      role: 'readWrite',
       db: keyValueDb,
     },
   ],
