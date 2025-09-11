@@ -6,3 +6,8 @@ services:
     env_file:
       - .env.db-root-creds
       - .env.db-key-value
+    volumes:
+      - type: bind
+        source: ./db-config/mongo-init.js
+        target: /docker-entrypoint-initdb.d/mongo-init.js
+        read_only: true
