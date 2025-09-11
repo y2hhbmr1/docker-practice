@@ -12,6 +12,8 @@ services:
     environment:
       - MONGODB_HOST=db
       - PORT=3000
+    depends_on:
+      - db
     networks:
       - key-value-net
   db:
