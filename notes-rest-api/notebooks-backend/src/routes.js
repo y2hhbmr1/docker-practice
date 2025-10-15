@@ -1,6 +1,6 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const { Notebook } = require("./models");
+const express = require('express');
+const mongoose = require('mongoose');
+const { Notebook } = require('./models');
 
 const notebookRouter = express.Router();
 
@@ -8,13 +8,13 @@ const validateId = (req, res, next) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "Notebook not found." });
+    return res.status(404).json({ error: 'Notebook not found.' });
   }
 
   next();
 };
 
-notebookRouter.post("/", async (req, res) => {
+notebookRouter.post('/', async (req, res) => {
   try {
     const { name, description } = req.body;
 
@@ -30,7 +30,7 @@ notebookRouter.post("/", async (req, res) => {
   }
 });
 
-notebookRouter.get("/", async (req, res) => {
+notebookRouter.get('/', async (req, res) => {
   try {
     const notebooks = await Notebook.find();
     return res.status(200).json({ data: notebooks });
@@ -39,12 +39,12 @@ notebookRouter.get("/", async (req, res) => {
   }
 });
 
-notebookRouter.get("/:id", validateId, async (req, res) => {
+notebookRouter.get('/:id', validateId, async (req, res) => {
   try {
     const notebook = await Notebook.findById(req.params.id);
 
     if (!notebook) {
-      return res.status(404).json({ error: "Notebook not found." });
+      return res.status(404).json({ error: 'Notebook not found.' });
     }
 
     return res.status(200).json({ data: notebook });
@@ -53,7 +53,7 @@ notebookRouter.get("/:id", validateId, async (req, res) => {
   }
 });
 
-notebookRouter.put("/:id", validateId, async (req, res) => {
+notebookRouter.put('/:id', validateId, async (req, res) => {
   try {
     const { name, description } = req.body;
 
@@ -64,7 +64,7 @@ notebookRouter.put("/:id", validateId, async (req, res) => {
     );
 
     if (!notebook) {
-      return res.status(404).json({ error: "Notebook not found." });
+      return res.status(404).json({ error: 'Notebook not found.' });
     }
 
     return res.json({ data: notebook });
@@ -73,12 +73,12 @@ notebookRouter.put("/:id", validateId, async (req, res) => {
   }
 });
 
-notebookRouter.delete("/:id", validateId, async (req, res) => {
+notebookRouter.delete('/:id', validateId, async (req, res) => {
   try {
     const notebook = await Notebook.findByIdAndDelete(req.params.id);
 
     if (!notebook) {
-      return res.status(404).json({ error: "Notebook not found." });
+      return res.status(404).json({ error: 'Notebook not found.' });
     }
 
     return res.sendStatus(204);
